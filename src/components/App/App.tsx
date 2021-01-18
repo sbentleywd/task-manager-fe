@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // Component imports
 
-import Dashboard from "../Welcome/DashBoard";
-import Login from "../Welcome/Login";
-import SignUp from "../Welcome/SignUp";
+import Dashboard from "../Dashboard/DashBoard";
+import Login from "../auth/Login";
+import SignUp from "../auth/SignUp";
 import useToken from "../auth/useToken";
 
 function App() {

@@ -1,4 +1,5 @@
 import React, { useState, SyntheticEvent } from "react";
+const { loginUser } = require("./utils");
 
 const Login = (props: any) => {
 	const [userName, setUserName] = useState("");
@@ -6,17 +7,8 @@ const Login = (props: any) => {
 
 	const handleSubmit = async (event: SyntheticEvent) => {
 		event.preventDefault();
-		props.setToken("test-token");
-		// try {
-		// 	const response = await fetch("http://localost:3001/users/login");
-		// 	if (response.ok) {
-		// 		const jsonResponse = await response.json();
-		// 		const token = jsonResponse.token;
-		// 		props.setToken(token);
-		// 	}
-		// } catch (e) {
-		// 	console.log(e);
-		// }
+		const user = await loginUser(userName, password);
+		props.setToken(user.token);
 	};
 
 	return (

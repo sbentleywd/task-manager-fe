@@ -1,5 +1,5 @@
 import React from "react";
-import Logoutbutton from "./Logoutbutton";
+import Logoutbutton from "../auth/Logoutbutton";
 
 const DashBoard = (props: any) => {
 	return (
