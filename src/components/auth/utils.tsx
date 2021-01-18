@@ -1,6 +1,8 @@
+const apiUrl = process.env.APIURL || "http://localhost:3000";
+
 export const loginUser = async (userName: string, password: string) => {
 	try {
-		const url = "http://localhost:3000/users/login";
+		const url = `${apiUrl}/users/login`;
 		const fetchOptions = {
 			method: "POST",
 			headers: {

@@ -1,7 +1,7 @@
 import React, { useState, SyntheticEvent } from "react";
 const { loginUser } = require("./utils");
 
-const Login = (props: any) => {
+const Login = (props: { setToken: (token: string) => void }) => {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 

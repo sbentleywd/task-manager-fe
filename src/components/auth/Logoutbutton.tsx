@@ -1,7 +1,7 @@
 import React from "react";
 
-const Logoutbutton = (props: any) => {
-	return <button onClick={() => props.setToken(null)}>Logout</button>;
+const Logoutbutton = (props: { setToken: (token: string) => void }) => {
+	return <button onClick={() => props.setToken("")}>Logout</button>;
 };
 
 export default Logoutbutton;

@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // Component imports
-
 import Dashboard from "../Dashboard/DashBoard";
 import Login from "../auth/Login";
 import SignUp from "../auth/SignUp";
