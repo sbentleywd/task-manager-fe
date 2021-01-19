@@ -3,12 +3,16 @@ import React from "react";
 // Component imports
 import Authenticated from "./Authenticated";
 import Unauthenticated from "./Unauthenticated";
-
-import useToken from "../auth/useToken";
+import useUser from "../auth/useUser";
 
 function App() {
-	const { token, setToken } = useToken();
-	return token ? <Authenticated setToken={setToken} /> : <Unauthenticated setToken={setToken} />;
+	const { user, setUser } = useUser();
+	console.log(user);
+	return user.token ? (
+		<Authenticated setUser={setUser} />
+	) : (
+		<Unauthenticated setUser={setUser} />
+	);
 }
 
 export default App;

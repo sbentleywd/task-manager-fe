@@ -2,21 +2,22 @@ import React from "react";
 import Login from "../Login/Login";
 import SignUp from "../SignUp/SignUp";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { UserInterface } from "../auth/useUser";
 
-const Unauthenticated = (props: { setToken: (token: string) => void }) => {
+const Unauthenticated = (props: { setUser: (user: UserInterface) => void }) => {
 	return (
 		<Router>
 			<Route
 				exact
 				path="/"
 				render={(routeProps) => (
-					<Login {...routeProps} setToken={props.setToken} />
+					<Login {...routeProps} setUser={props.setUser} />
 				)}
 			/>
 			<Route
 				path="/signup"
 				render={(routeProps) => (
-					<SignUp {...routeProps} setToken={props.setToken} />
+					<SignUp {...routeProps} setUser={props.setUser} />
 				)}
 			/>
 		</Router>

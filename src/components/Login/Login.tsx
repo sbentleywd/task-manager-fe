@@ -1,15 +1,16 @@
 import React, { useState, SyntheticEvent } from "react";
+import { UserInterface } from "../auth/useUser";
 
 const { loginUser } = require("../auth/utils");
 
-const Login = (props: { setToken: (token: string) => void }) => {
+const Login = (props: { setUser: (user: UserInterface) => void }) => {
 	const [userEmail, setUserEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	const handleLogin = async (event: SyntheticEvent) => {
 		event.preventDefault();
 		const user = await loginUser(userEmail, password);
-		props.setToken(user.token);
+		props.setUser(user);
 	};
 
 	return (

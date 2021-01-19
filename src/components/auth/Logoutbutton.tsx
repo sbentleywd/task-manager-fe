@@ -1,7 +1,18 @@
 import React from "react";
+import { UserInterface } from "../auth/useUser";
 
-const Logoutbutton = (props: { setToken: (token: string) => void }) => {
-	return <button onClick={() => props.setToken("")}>Logout</button>;
+const Logoutbutton = (props: { setUser: (user: UserInterface) => void }) => {
+	return (
+		<button
+			onClick={() =>
+				props.setUser({
+					token: "",
+				})
+			}
+		>
+			Logout
+		</button>
+	);
 };
 
 export default Logoutbutton;

@@ -1,20 +1,18 @@
 import React, { SyntheticEvent, useState } from "react";
-// import { Redirect } from "react-router-dom";
+import { UserInterface } from "../auth/useUser";
 
 const { createUser } = require("../auth/utils");
 
-const SignUp = (props: { setToken: (token: string) => void }) => {
+const SignUp = (props: { setUser: (user: UserInterface) => void }) => {
 	const [userName, setUserName] = useState("");
 	const [userEmail, setUserEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [userAge, setAge] = useState(0);
-	// const [redirect, setRedirect] = useState(false);
 
 	const handleCreateUser = async (event: SyntheticEvent) => {
 		event.preventDefault();
 		const user = await createUser(userName, userEmail, password, userAge);
-		props.setToken(user.token);
-
+		props.setUser(user);
 		window.location.href = "/";
 	};
 
@@ -58,8 +56,7 @@ const SignUp = (props: { setToken: (token: string) => void }) => {
 						}}
 					/>
 				</label>
-
-				<input type="submit" value="Submit" />
+				<input type="submit" value="Sign Up" />
 			</form>
 		</div>
 	);
