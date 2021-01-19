@@ -1,3 +1,4 @@
+
 const apiUrl = process.env.APIURL || "http://localhost:3000";
 
 export const loginUser = async (email: string, password: string) => {
@@ -58,4 +59,23 @@ export const createUser = async (
 	return {
 		token: null,
 	};
+};
+
+export const getUserTasks = async (token: string) => {
+	try {
+		const url = `${apiUrl}/tasks?sortBy=createdAt:asc`;
+		const fetchOptions = {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		const response = await fetch(url, fetchOptions);
+		const jsonResponse = await response.json();
+		return await jsonResponse;
+	} catch (e) {
+		console.log(e);
+		return [];
+	}
 };

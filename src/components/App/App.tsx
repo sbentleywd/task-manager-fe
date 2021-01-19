@@ -7,7 +7,6 @@ import useUser from "../auth/useUser";
 
 function App() {
 	const { user, setUser } = useUser();
-	console.log(user);
 	return user.token ? (
 		<Authenticated setUser={setUser} />
 	) : (
