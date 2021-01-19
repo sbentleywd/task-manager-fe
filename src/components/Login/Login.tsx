@@ -1,18 +1,42 @@
-import React from "react";
-import Form from "../Form/Form";
+import React, { useState, SyntheticEvent } from "react";
 
 const { loginUser } = require("../auth/utils");
 
 const Login = (props: { setToken: (token: string) => void }) => {
-	const handleLogin = async (userName: string, password: string) => {
-		const user = await loginUser(userName, password);
+	const [userEmail, setUserEmail] = useState("");
+	const [password, setPassword] = useState("");
+
+	const handleLogin = async (event: SyntheticEvent) => {
+		event.preventDefault();
+		const user = await loginUser(userEmail, password);
 		props.setToken(user.token);
 	};
 
 	return (
 		<div>
 			<h1>Please login</h1>
-			<Form handleSubmit={handleLogin} />
+			<form onSubmit={(event) => handleLogin(event)}>
+				<label>
+					Email:
+					<input
+						type="email"
+						value={userEmail}
+						onChange={(e) => setUserEmail(e.target.value)}
+					/>
+				</label>
+
+				<label>
+					Password
+					<input
+						type="password"
+						value={password}
+						onChange={(e) => {
+							setPassword(e.target.value);
+						}}
+					/>
+				</label>
+				<input type="submit" value="Submit" />
+			</form>
 			<a href="/signup">Create Account</a>
 		</div>
 	);

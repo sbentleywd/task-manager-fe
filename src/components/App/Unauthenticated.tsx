@@ -13,7 +13,12 @@ const Unauthenticated = (props: { setToken: (token: string) => void }) => {
 					<Login {...routeProps} setToken={props.setToken} />
 				)}
 			/>
-			<Route path="/signup" component={SignUp} />
+			<Route
+				path="/signup"
+				render={(routeProps) => (
+					<SignUp {...routeProps} setToken={props.setToken} />
+				)}
+			/>
 		</Router>
 	);
 };
