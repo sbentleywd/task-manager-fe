@@ -36,6 +36,7 @@ const Login = (props: { setToken: (token: string) => void }) => {
 				</label>
 				<input type="submit" value="Submit" />
 			</form>
+			<a href="/signup">Create Account</a>
 		</div>
 	);
 };
