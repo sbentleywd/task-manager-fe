@@ -19,7 +19,7 @@ const UserTasks = () => {
 		<div>
 			<h3>You have {tasks.length} tasks</h3>
 			{tasks.map((task) => (
-				<Task task={task} />
+				<Task task={task} key={task._id} />
 			))}
 		</div>
 	);

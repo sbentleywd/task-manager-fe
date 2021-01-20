@@ -1,9 +1,14 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
+import useUser from "../auth/useUser";
 import { UserInterface } from "../auth/useUser";
 
 const Logoutbutton = (props: { setUser: (user: UserInterface) => void }) => {
+	const { setUser } = useUser();
 	return (
-		<button
+		<Button
+			variant="contained"
+			color="primary"
 			onClick={() =>
 				props.setUser({
 					token: "",
@@ -11,7 +16,7 @@ const Logoutbutton = (props: { setUser: (user: UserInterface) => void }) => {
 			}
 		>
 			Logout
-		</button>
+		</Button>
 	);
 };
 

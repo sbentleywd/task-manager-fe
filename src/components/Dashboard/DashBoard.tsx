@@ -1,18 +1,23 @@
-import userEvent from "@testing-library/user-event";
 import React from "react";
-import Logoutbutton from "../auth/Logoutbutton";
-import useUser from "../auth/useUser";
-import { UserInterface } from "../auth/useUser";
-import UserTasks from "../UserTasks/UserTasks";
 
-const DashBoard = (props: { setUser: (user: UserInterface) => void }) => {
+import useUser from "../auth/useUser";
+
+import UserTasks from "../UserTasks/UserTasks";
+import Grid from "@material-ui/core/Grid";
+
+const DashBoard = () => {
 	const { user } = useUser();
+
 	return (
-		<div>
-			<h1>Welcome {user.user!.name}</h1>
-			<UserTasks />
-			<Logoutbutton setUser={props.setUser} />
-		</div>
+		<Grid container spacing={3}>
+			<Grid item xs={12}>
+				<h1>Welcome {user.user!.name}</h1>
+			</Grid>
+			<Grid item xs={12}>
+				<UserTasks />
+			</Grid>
+			<Grid item xs={12}></Grid>
+		</Grid>
 	);
 };
 

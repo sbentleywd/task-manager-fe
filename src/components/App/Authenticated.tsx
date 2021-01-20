@@ -2,18 +2,28 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Dashboard from "../Dashboard/DashBoard";
 import { UserInterface } from "../auth/useUser";
+import AuthenticatedNavBar from "../NavBar/AuthenticatedNavBar";
+import Container from "@material-ui/core/Container";
 
 const Authenticated = (props: { setUser: (user: UserInterface) => void }) => {
 	return (
-		<Router>
-			<Route
-				exact
-				path="/"
-				render={(routeProps: any) => (
-					<Dashboard {...routeProps} setUser={props.setUser} />
-				)}
-			/>
-		</Router>
+		<>
+			<AuthenticatedNavBar setUser={props.setUser} />
+			<Container maxWidth="md">
+				<Router>
+					<Route
+						exact
+						path="/"
+						render={(routeProps: any) => (
+							<Dashboard
+								{...routeProps}
+								setUser={props.setUser}
+							/>
+						)}
+					/>
+				</Router>
+			</Container>
+		</>
 	);
 };
 
