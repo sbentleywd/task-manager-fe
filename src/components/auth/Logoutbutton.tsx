@@ -1,20 +1,18 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import useUser from "../auth/useUser";
+
 import { UserInterface } from "../auth/useUser";
 
 const Logoutbutton = (props: { setUser: (user: UserInterface) => void }) => {
-	const { setUser } = useUser();
+	const handleLogout = () => {
+		props.setUser({
+			token: "",
+		});
+		window.location.href = "/";
+	};
+
 	return (
-		<Button
-			variant="contained"
-			color="primary"
-			onClick={() =>
-				props.setUser({
-					token: "",
-				})
-			}
-		>
+		<Button color="inherit" onClick={handleLogout}>
 			Logout
 		</Button>
 	);

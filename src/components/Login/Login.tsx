@@ -11,6 +11,7 @@ const Login = (props: { setUser: (user: UserInterface) => void }) => {
 		event.preventDefault();
 		const user = await loginUser(userEmail, password);
 		props.setUser(user);
+		window.location.href = "/";
 	};
 
 	return (
