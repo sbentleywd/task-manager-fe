@@ -3,13 +3,13 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import Done from "@material-ui/icons/Done";
 import Clear from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
+
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		root: {
 			minWidth: 275,
-			marginBottom: theme.spacing(1),
+			marginBottom: theme.spacing(2),
+
 			width: "50%",
 		},
 		main: {
@@ -30,7 +31,16 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		content: {
 			display: "flex",
-			paddingBottom: 0,
+			padding: theme.spacing(3),
+		},
+		complete: {
+			color: "#4caf50",
+		},
+		notComplete: {
+			color: "#ff1744",
+		},
+		actionButton: {
+			padding: theme.spacing(1),
 		},
 	})
 );
@@ -57,29 +67,22 @@ const Task = (props: { task: TaskInterface }) => {
 						Created: {formatDate(props.task.createdAt)}
 					</Typography>
 				</div>
-
-				{props.task.completed ? <Done /> : <Clear />}
+				<CardActions>
+					<IconButton className={classes.actionButton}>
+						<Edit />
+					</IconButton>
+					<IconButton className={classes.actionButton}>
+						<Delete />
+					</IconButton>
+					<IconButton className={classes.actionButton}>
+						{props.task.completed ? (
+							<Done className={classes.complete} />
+						) : (
+							<Clear className={classes.notComplete} />
+						)}
+					</IconButton>
+				</CardActions>
 			</CardContent>
-			<CardActions>
-				<IconButton
-					aria-label="edit-task"
-					aria-controls="menu-appbar"
-					aria-haspopup="true"
-					onClick={() => console.log("editing task")}
-					color="inherit"
-				>
-					<Edit />
-				</IconButton>
-				<IconButton
-					aria-label="delete-task"
-					aria-controls="menu-appbar"
-					aria-haspopup="true"
-					onClick={() => console.log("deleting task")}
-					color="inherit"
-				>
-					<Delete />
-				</IconButton>
-			</CardActions>
 		</Card>
 	);
 };

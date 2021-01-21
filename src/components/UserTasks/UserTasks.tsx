@@ -18,6 +18,9 @@ const UserTasks = () => {
 	const [tasks, setTasks] = useState<TaskInterface[]>([]);
 	const { user } = useUser();
 	const classes = useStyles();
+	const outstandingTasks = tasks.filter((task) => {
+		return !task.completed;
+	}).length;
 
 	useEffect(() => {
 		const getTasks = async () => {
@@ -29,7 +32,7 @@ const UserTasks = () => {
 
 	return (
 		<div className={classes.taskContainer}>
-			<h3>You have {tasks.length} tasks</h3>
+			<h3>You have {outstandingTasks} tasks to complete</h3>
 			{tasks.map((task) => (
 				<Task task={task} key={task._id} />
 			))}
