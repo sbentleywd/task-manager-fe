@@ -1,7 +1,6 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-
 // Component imports
 import Authenticated from "./Authenticated";
 import Unauthenticated from "./Unauthenticated";
@@ -14,7 +13,7 @@ function App() {
 		<>
 			<CssBaseline />
 
-			{user.token ? (
+			{user?.token ? (
 				<Authenticated setUser={setUser} />
 			) : (
 				<Unauthenticated setUser={setUser} />

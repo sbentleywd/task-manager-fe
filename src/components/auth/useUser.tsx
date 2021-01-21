@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function useUser() {
 	const getUser = () => {
-		const userData = JSON.parse(localStorage.getItem("userData")!);
+		const userData = JSON.parse(localStorage.getItem("userData")!) || {};
 		return userData!;
 	};
 	const [user, setUser] = useState<UserInterface>(getUser());
