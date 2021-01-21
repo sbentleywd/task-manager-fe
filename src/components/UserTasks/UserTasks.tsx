@@ -2,10 +2,22 @@ import React, { useEffect, useState } from "react";
 import { getUserTasks } from "../auth/utils";
 import useUser from "../auth/useUser";
 import Task, { TaskInterface } from "../Task/Task";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		taskContainer: {
+			display: "flex",
+			alignItems: "center",
+			flexDirection: "column",
+		},
+	})
+);
 
 const UserTasks = () => {
 	const [tasks, setTasks] = useState<TaskInterface[]>([]);
 	const { user } = useUser();
+	const classes = useStyles();
 
 	useEffect(() => {
 		const getTasks = async () => {
@@ -16,7 +28,7 @@ const UserTasks = () => {
 	}, []);
 
 	return (
-		<div>
+		<div className={classes.taskContainer}>
 			<h3>You have {tasks.length} tasks</h3>
 			{tasks.map((task) => (
 				<Task task={task} key={task._id} />
