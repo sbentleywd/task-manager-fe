@@ -6,9 +6,9 @@ import Authenticated from "./Authenticated";
 import Unauthenticated from "./Unauthenticated";
 import useUser from "../auth/useUser";
 
+
 function App() {
 	const { user, setUser } = useUser();
-
 	return (
 		<>
 			<CssBaseline />

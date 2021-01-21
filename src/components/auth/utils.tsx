@@ -1,5 +1,8 @@
+require("dotenv").config();
 
-const apiUrl = process.env.APIURL || "http://localhost:3000";
+const apiUrl =
+	process.env.REACT_APP_APIURL ||
+	"https://bentley-task-manager.herokuapp.com";
 
 export const loginUser = async (email: string, password: string) => {
 	try {
