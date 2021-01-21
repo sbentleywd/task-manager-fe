@@ -82,3 +82,36 @@ export const getUserTasks = async (token: string) => {
 		return [];
 	}
 };
+
+export const updateTask = async (token: string, id: string, options: {}) => {
+	try {
+		const url = `${apiUrl}/tasks/${id}`;
+		const fetchOptions = {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(options),
+		};
+		await fetch(url, fetchOptions);
+	} catch (e) {
+		console.log(e);
+	}
+};
+
+export const deleteTask = async (token: string, id: string) => {
+	try {
+		const url = `${apiUrl}/tasks/${id}`;
+		const fetchOptions = {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		await fetch(url, fetchOptions);
+	} catch (e) {
+		console.log(e);
+	}
+};

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getUserTasks } from "../auth/utils";
+import { getUserTasks, deleteTask, updateTask } from "../auth/utils";
 import useUser from "../auth/useUser";
 import Task, { TaskInterface } from "../Task/Task";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
@@ -22,19 +22,35 @@ const UserTasks = () => {
 		return !task.completed;
 	}).length;
 
+	const getTasks = async () => {
+		const tasks = await getUserTasks(user.token);
+		setTasks(tasks);
+	};
+
 	useEffect(() => {
-		const getTasks = async () => {
-			const tasks = await getUserTasks(user.token);
-			setTasks(tasks);
-		};
 		getTasks();
 	}, []);
+
+	const handleComplete = async (id: string, completed: boolean) => {
+		await updateTask(user.token, id, { completed: !completed });
+		getTasks();
+	};
+
+	const handleDelete = async (id: string) => {
+		await deleteTask(user.token, id);
+		getTasks();
+	};
 
 	return (
 		<div className={classes.taskContainer}>
 			<h3>You have {outstandingTasks} tasks to complete</h3>
 			{tasks.map((task) => (
-				<Task task={task} key={task._id} />
+				<Task
+					task={task}
+					key={task._id}
+					handleComplete={handleComplete}
+					handleDelete={handleDelete}
+				/>
 			))}
 		</div>
 	);

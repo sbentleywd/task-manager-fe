@@ -1,7 +1,5 @@
 import React from "react";
-
 import useUser from "../auth/useUser";
-
 import UserTasks from "../UserTasks/UserTasks";
 import Grid from "@material-ui/core/Grid";
 

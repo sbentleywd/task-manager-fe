@@ -8,12 +8,17 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import useUser from "../auth/useUser";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		title: {
 			margin: "0.3em",
 			flexGrow: 1,
+		},
+		user: {
+			display: "flex",
+			alignItems: "center",
 		},
 	})
 );
@@ -24,6 +29,7 @@ const AuthenticatedNavBar = (props: {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
+	const { user } = useUser();
 
 	const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -47,7 +53,8 @@ const AuthenticatedNavBar = (props: {
 					Task-Manager
 				</Typography>
 
-				<div>
+				<div className={classes.user}>
+					<Typography>{user.user?.name}</Typography>
 					<IconButton
 						aria-label="account of current user"
 						aria-controls="menu-appbar"

@@ -10,6 +10,7 @@ import Done from "@material-ui/icons/Done";
 import Clear from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 
+import useUser from "../auth/useUser";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -51,8 +52,14 @@ const formatDate = (dateString: string) => {
 	return date.toDateString();
 };
 
-const Task = (props: { task: TaskInterface }) => {
+const Task = (props: {
+	task: TaskInterface;
+	handleDelete: (id: string) => void;
+	handleComplete: (id: string, completed: boolean) => void;
+}) => {
 	const classes = useStyles();
+	const { user } = useUser();
+
 	return (
 		<Card className={classes.root}>
 			<CardContent className={classes.content}>
@@ -71,10 +78,21 @@ const Task = (props: { task: TaskInterface }) => {
 					<IconButton className={classes.actionButton}>
 						<Edit />
 					</IconButton>
-					<IconButton className={classes.actionButton}>
+					<IconButton
+						className={classes.actionButton}
+						onClick={() => props.handleDelete(props.task._id)}
+					>
 						<Delete />
 					</IconButton>
-					<IconButton className={classes.actionButton}>
+					<IconButton
+						className={classes.actionButton}
+						onClick={() =>
+							props.handleComplete(
+								props.task._id,
+								props.task.completed
+							)
+						}
+					>
 						{props.task.completed ? (
 							<Done className={classes.complete} />
 						) : (
