@@ -10,9 +10,9 @@ import CreateTask from "../CreateTask/CreateTask";
 const Authenticated = (props: { setUser: (user: UserInterface) => void }) => {
 	return (
 		<>
-			<AuthenticatedNavBar setUser={props.setUser} />
-			<Container maxWidth="md">
-				<Router>
+			<Router>
+				<AuthenticatedNavBar setUser={props.setUser} />
+				<Container maxWidth="md">
 					<Route
 						exact
 						path="/"
@@ -25,8 +25,8 @@ const Authenticated = (props: { setUser: (user: UserInterface) => void }) => {
 					/>
 					<Route path="/tasks/edit/:id" component={EditTask} />
 					<Route path="/tasks/new" component={CreateTask} />
-				</Router>
-			</Container>
+				</Container>
+			</Router>
 		</>
 	);
 };

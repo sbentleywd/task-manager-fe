@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import useUser from "../auth/useUser";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -19,6 +20,10 @@ const useStyles = makeStyles((theme: Theme) =>
 		user: {
 			display: "flex",
 			alignItems: "center",
+		},
+		link: {
+			textDecoration: "none",
+			color: "inherit",
 		},
 	})
 );
@@ -43,7 +48,7 @@ const AuthenticatedNavBar = (props: {
 		props.setUser({
 			token: "",
 		});
-		window.location.href = "/";
+		// window.location.href = "/";
 	};
 
 	return (
@@ -79,9 +84,17 @@ const AuthenticatedNavBar = (props: {
 						open={open}
 						onClose={handleClose}
 					>
-						{/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-						<MenuItem onClick={handleClose}>My account</MenuItem> */}
-						<MenuItem onClick={handleLogout}>Log Out</MenuItem>
+						{/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
+						<MenuItem>
+							<Link to="/" className={classes.link}>
+								My Tasks
+							</Link>
+						</MenuItem>
+						<MenuItem onClick={handleLogout}>
+							<Link to="/" className={classes.link}>
+								Log Out
+							</Link>
+						</MenuItem>
 					</Menu>
 				</div>
 			</Toolbar>
