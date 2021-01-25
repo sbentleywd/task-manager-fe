@@ -115,3 +115,25 @@ export const deleteTask = async (token: string, id: string) => {
 		console.log(e);
 	}
 };
+
+export const createTask = async (token: string, options: newTask) => {
+	try {
+		const url = `${apiUrl}/tasks`;
+		const fetchOptions = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(options),
+		};
+		await fetch(url, fetchOptions);
+	} catch (e) {
+		console.log(e);
+	}
+};
+
+type newTask = {
+	description: string;
+	completed: boolean;
+};

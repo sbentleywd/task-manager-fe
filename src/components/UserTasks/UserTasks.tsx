@@ -3,6 +3,9 @@ import { getUserTasks, deleteTask, updateTask } from "../auth/utils";
 import useUser from "../auth/useUser";
 import Task, { TaskInterface } from "../Task/Task";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import AddCircle from "@material-ui/icons/AddCircle";
+import IconButton from "@material-ui/core/IconButton";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -10,6 +13,9 @@ const useStyles = makeStyles((theme: Theme) =>
 			display: "flex",
 			alignItems: "center",
 			flexDirection: "column",
+		},
+		actionButton: {
+			padding: theme.spacing(1),
 		},
 	})
 );
@@ -52,6 +58,11 @@ const UserTasks = () => {
 					handleDelete={handleDelete}
 				/>
 			))}
+			<Link to="/tasks/new">
+				<IconButton className={classes.actionButton}>
+					<AddCircle />
+				</IconButton>
+			</Link>
 		</div>
 	);
 };
