@@ -4,6 +4,7 @@ import Dashboard from "../Dashboard/DashBoard";
 import { UserInterface } from "../auth/useUser";
 import AuthenticatedNavBar from "../NavBar/AuthenticatedNavBar";
 import Container from "@material-ui/core/Container";
+import EditTask from "../EditTask/EditTask";
 
 const Authenticated = (props: { setUser: (user: UserInterface) => void }) => {
 	return (
@@ -21,6 +22,7 @@ const Authenticated = (props: { setUser: (user: UserInterface) => void }) => {
 							/>
 						)}
 					/>
+					<Route path="/tasks/edit/:id" component={EditTask} />
 				</Router>
 			</Container>
 		</>

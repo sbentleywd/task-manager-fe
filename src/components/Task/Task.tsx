@@ -9,6 +9,7 @@ import Delete from "@material-ui/icons/Delete";
 import Done from "@material-ui/icons/Done";
 import Clear from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
+import { Link } from "react-router-dom";
 
 import useUser from "../auth/useUser";
 
@@ -75,9 +76,16 @@ const Task = (props: {
 					</Typography>
 				</div>
 				<CardActions>
-					<IconButton className={classes.actionButton}>
-						<Edit />
-					</IconButton>
+					<Link
+						to={{
+							pathname: `/tasks/edit/${props.task._id}`,
+							state: props.task,
+						}}
+					>
+						<IconButton className={classes.actionButton}>
+							<Edit />
+						</IconButton>
+					</Link>
 					<IconButton
 						className={classes.actionButton}
 						onClick={() => props.handleDelete(props.task._id)}
