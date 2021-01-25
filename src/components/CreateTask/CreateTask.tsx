@@ -2,6 +2,7 @@ import React from "react";
 import useUser from "../auth/useUser";
 import TaskForm from "../TaskForm/TaskForm";
 import { createTask } from "../auth/utils";
+import BackButton from "../BackButton/BackButton";
 
 const CreateTask = () => {
 	const { user } = useUser();
@@ -11,10 +12,13 @@ const CreateTask = () => {
 		window.location.href = "/";
 	};
 	return (
-		<TaskForm
-			task={{ description: "", completed: false }}
-			handleSave={handleSave}
-		/>
+		<>
+			<BackButton />
+			<TaskForm
+				task={{ description: "", completed: false }}
+				handleSave={handleSave}
+			/>
+		</>
 	);
 };
 

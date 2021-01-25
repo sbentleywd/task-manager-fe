@@ -5,6 +5,7 @@ import { TaskInterface } from "../Task/Task";
 import { updateTask } from "../auth/utils";
 import useUser from "../auth/useUser";
 import TaskForm from "../TaskForm/TaskForm";
+import BackButton from "../BackButton/BackButton";
 
 const EditTask = (
 	props: RouteComponentProps<{}, StaticContext, TaskInterface>
@@ -18,7 +19,12 @@ const EditTask = (
 		window.location.href = "/";
 	};
 
-	return <TaskForm task={task} handleSave={handleSave} />;
+	return (
+		<>
+			<BackButton />
+			<TaskForm task={task} handleSave={handleSave} />
+		</>
+	);
 };
 
 export default EditTask;
