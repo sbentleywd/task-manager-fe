@@ -45,13 +45,9 @@ const UserTasks = () => {
 		setLoaded(true);
 	};
 
-	// useEffect(() => {
-	// 	getTasks();
-	// }, []);
-
 	useEffect(() => {
 		getTasks();
-	}, [filterCompleted]);
+	}, [filterCompleted, sortBy, sortOrder]);
 
 	const handleComplete = async (id: string, completed: boolean) => {
 		await updateTask(user.token, id, { completed: !completed });
@@ -68,6 +64,10 @@ const UserTasks = () => {
 			<UserTaskControls
 				filterCompleted={filterCompleted}
 				setFilterCompleted={setFilterCompleted}
+				sortBy={sortBy}
+				setSortBy={setSortBy}
+				sortOrder={sortOrder}
+				setSortOrder={setSortOrder}
 			/>
 			<div className={classes.taskContainer}>
 				<h3>You have {outstandingTasks} tasks to complete</h3>
