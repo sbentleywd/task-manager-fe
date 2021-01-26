@@ -6,6 +6,7 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import AddCircle from "@material-ui/icons/AddCircle";
 import IconButton from "@material-ui/core/IconButton";
 import { Link } from "react-router-dom";
+import UserTaskControls from "../UserTaskControls/UserTaskControls";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -23,6 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
 const UserTasks = () => {
 	const [tasks, setTasks] = useState<TaskInterface[]>([]);
 	const [loaded, setLoaded] = useState<boolean>(false);
+	const [sortBy, setSortBy] = useState<string>("createdAt");
+	const [sortOrder, setSortOrder] = useState<string>("desc");
+	const [filterCompleted, setFilterCompleted] = useState<boolean>(true);
 	const { user } = useUser();
 	const classes = useStyles();
 	const outstandingTasks = tasks.filter((task) => {
@@ -30,14 +34,24 @@ const UserTasks = () => {
 	}).length;
 
 	const getTasks = async () => {
-		const tasks = await getUserTasks(user.token);
+		console.log("getting tasks");
+		const tasks = await getUserTasks(
+			user.token,
+			sortBy,
+			sortOrder,
+			filterCompleted
+		);
 		setTasks(tasks);
 		setLoaded(true);
 	};
 
+	// useEffect(() => {
+	// 	getTasks();
+	// }, []);
+
 	useEffect(() => {
 		getTasks();
-	}, []);
+	}, [filterCompleted]);
 
 	const handleComplete = async (id: string, completed: boolean) => {
 		await updateTask(user.token, id, { completed: !completed });
@@ -50,22 +64,28 @@ const UserTasks = () => {
 	};
 
 	return loaded ? (
-		<div className={classes.taskContainer}>
-			<h3>You have {outstandingTasks} tasks to complete</h3>
-			{tasks.map((task) => (
-				<Task
-					task={task}
-					key={task._id}
-					handleComplete={handleComplete}
-					handleDelete={handleDelete}
-				/>
-			))}
-			<Link to="/tasks/new">
-				<IconButton className={classes.actionButton}>
-					<AddCircle />
-				</IconButton>
-			</Link>
-		</div>
+		<>
+			<UserTaskControls
+				filterCompleted={filterCompleted}
+				setFilterCompleted={setFilterCompleted}
+			/>
+			<div className={classes.taskContainer}>
+				<h3>You have {outstandingTasks} tasks to complete</h3>
+				{tasks.map((task) => (
+					<Task
+						task={task}
+						key={task._id}
+						handleComplete={handleComplete}
+						handleDelete={handleDelete}
+					/>
+				))}
+				<Link to="/tasks/new">
+					<IconButton className={classes.actionButton}>
+						<AddCircle />
+					</IconButton>
+				</Link>
+			</div>
+		</>
 	) : (
 		<h1>Loading tasks</h1>
 	);

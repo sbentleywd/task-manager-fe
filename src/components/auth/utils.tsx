@@ -64,9 +64,16 @@ export const createUser = async (
 	};
 };
 
-export const getUserTasks = async (token: string) => {
+export const getUserTasks = async (
+	token: string,
+	sortBy: string,
+	sortOrder: string,
+	filterCompleted: boolean
+) => {
 	try {
-		const url = `${apiUrl}/tasks?sortBy=createdAt:asc`;
+		const url = `${apiUrl}/tasks?sortBy=${sortBy}:${sortOrder}${
+			filterCompleted ? "&completed=false" : ""
+		}`;
 		const fetchOptions = {
 			method: "GET",
 			headers: {
