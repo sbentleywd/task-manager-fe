@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const UserTasks = () => {
 	const [tasks, setTasks] = useState<TaskInterface[]>([]);
+	const [loaded, setLoaded] = useState<boolean>(false);
 	const { user } = useUser();
 	const classes = useStyles();
 	const outstandingTasks = tasks.filter((task) => {
@@ -31,6 +32,7 @@ const UserTasks = () => {
 	const getTasks = async () => {
 		const tasks = await getUserTasks(user.token);
 		setTasks(tasks);
+		setLoaded(true);
 	};
 
 	useEffect(() => {
@@ -47,7 +49,7 @@ const UserTasks = () => {
 		getTasks();
 	};
 
-	return (
+	return loaded ? (
 		<div className={classes.taskContainer}>
 			<h3>You have {outstandingTasks} tasks to complete</h3>
 			{tasks.map((task) => (
@@ -64,6 +66,8 @@ const UserTasks = () => {
 				</IconButton>
 			</Link>
 		</div>
+	) : (
+		<h1>Loading tasks</h1>
 	);
 };
 
