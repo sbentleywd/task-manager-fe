@@ -65,6 +65,7 @@ const UserTaskControls = (props: {
 						}
 					>
 						<MenuItem value={"createdAt"}>Created</MenuItem>
+						<MenuItem value={"dueDate"}>Due Date</MenuItem>
 						<MenuItem value={"description"}>Description</MenuItem>
 					</Select>
 				</FormControl>

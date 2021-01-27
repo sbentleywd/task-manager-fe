@@ -14,8 +14,16 @@ const EditTask = (
 
 	const { user } = useUser();
 
-	const handleSave = async (description: string, completed: boolean) => {
-		await updateTask(user.token, task._id, { description, completed });
+	const handleSave = async (
+		description: string,
+		completed: boolean,
+		dueDate: Date | null
+	) => {
+		await updateTask(user.token, task._id, {
+			description,
+			completed,
+			dueDate,
+		});
 		window.location.href = "/";
 	};
 

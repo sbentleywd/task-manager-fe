@@ -7,6 +7,7 @@ import Container from "@material-ui/core/Container";
 import EditTask from "../EditTask/EditTask";
 import CreateTask from "../CreateTask/CreateTask";
 
+
 const Authenticated = (props: { setUser: (user: UserInterface) => void }) => {
 	return (
 		<>

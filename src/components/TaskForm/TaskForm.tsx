@@ -4,6 +4,12 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Switch from "@material-ui/core/Switch";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+	MuiPickersUtilsProvider,
+	KeyboardDatePicker,
+} from "@material-ui/pickers";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -25,14 +31,25 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const TaskForm = (props: {
-	task: { description: string; completed: boolean };
-	handleSave: (description: string, completed: boolean) => void;
+	task: { description: string; completed: boolean; dueDate?: string };
+	handleSave: (
+		description: string,
+		completed: boolean,
+		dueDate: Date | null
+	) => void;
 }) => {
 	const classes = useStyles();
 	const [description, setDescription] = useState<string>(
 		props.task.description
 	);
 	const [completed, setCompleted] = useState<boolean>(props.task.completed);
+	const [selectedDate, setSelectedDate] = React.useState<Date | null>(
+		props.task.dueDate ? new Date(props.task.dueDate!) : new Date()
+	);
+
+	const handleDateChange = (date: Date | null) => {
+		setSelectedDate(date);
+	};
 
 	return (
 		<div className={classes.formContainer}>
@@ -44,6 +61,20 @@ const TaskForm = (props: {
 				onChange={(e) => setDescription(e.target.value)}
 				value={description}
 			/>
+
+			<MuiPickersUtilsProvider utils={DateFnsUtils}>
+				<KeyboardDatePicker
+					margin="normal"
+					id="date-picker-dialog"
+					label="Due date"
+					format="dd/MM/yyyy"
+					value={selectedDate}
+					onChange={handleDateChange}
+					KeyboardButtonProps={{
+						"aria-label": "change date",
+					}}
+				/>
+			</MuiPickersUtilsProvider>
 			<InputLabel id="task-form-completed">Completed?</InputLabel>
 			<Switch
 				checked={completed}
@@ -51,8 +82,11 @@ const TaskForm = (props: {
 				name="completed"
 				inputProps={{ "aria-label": "completed checkbox" }}
 			/>
+
 			<Button
-				onClick={() => props.handleSave(description, completed)}
+				onClick={() =>
+					props.handleSave(description, completed, selectedDate)
+				}
 				variant="contained"
 				color="primary"
 				className={classes.submit}

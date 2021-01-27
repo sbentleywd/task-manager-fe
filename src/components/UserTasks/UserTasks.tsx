@@ -34,7 +34,6 @@ const UserTasks = () => {
 	}).length;
 
 	const getTasks = async () => {
-		console.log("getting tasks");
 		const tasks = await getUserTasks(
 			user.token,
 			sortBy,

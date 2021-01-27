@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const formatDate = (dateString: string) => {
 	const date = new Date(dateString);
-
 	return date.toDateString();
 };
 
@@ -74,6 +73,14 @@ const Task = (props: {
 					>
 						Created: {formatDate(props.task.createdAt)}
 					</Typography>
+					{props.task.dueDate ? (
+						<Typography
+							className={classes.created}
+							color="textSecondary"
+						>
+							Due: {formatDate(props.task.dueDate)}
+						</Typography>
+					) : null}
 				</div>
 				<CardActions>
 					<Link
@@ -123,4 +130,5 @@ export interface TaskInterface {
 	createdAt: string;
 	updatedAt: string;
 	__v: number;
+	dueDate?: string;
 }

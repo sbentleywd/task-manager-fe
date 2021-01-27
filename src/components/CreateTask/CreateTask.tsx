@@ -7,8 +7,9 @@ import BackButton from "../BackButton/BackButton";
 const CreateTask = () => {
 	const { user } = useUser();
 
-	const handleSave = async (description: string, completed: boolean) => {
-		await createTask(user.token, { description, completed });
+	const handleSave = async (description: string, completed: boolean, dueDate: Date | null) => {
+
+		await createTask(user.token, { description, completed, dueDate });
 		window.location.href = "/";
 	};
 	return (

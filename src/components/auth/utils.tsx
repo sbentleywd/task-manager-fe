@@ -143,4 +143,5 @@ export const createTask = async (token: string, options: newTask) => {
 type newTask = {
 	description: string;
 	completed: boolean;
+	dueDate?: Date | null;
 };
