@@ -10,6 +10,7 @@ import Done from "@material-ui/icons/Done";
 import Clear from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 import { Link } from "react-router-dom";
+import Checkbox from "@material-ui/core/Checkbox";
 
 import useUser from "../auth/useUser";
 
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
 		title: {
 			fontSize: 14,
 		},
-		created: {},
+		date: {},
 		submit: {
 			margin: theme.spacing(1),
 		},
@@ -29,11 +30,16 @@ const useStyles = makeStyles((theme: Theme) =>
 			width: "50%",
 		},
 		main: {
-			flexGrow: 1,
+			width: "100%",
+			display: "flex",
+			justifyContent: "space-between",
 		},
 		content: {
 			display: "flex",
-			padding: theme.spacing(3),
+			padding: theme.spacing(2),
+			paddingBottom: 0,
+			flexWrap: "wrap",
+			flexDirection: "column",
 		},
 		complete: {
 			color: "#4caf50",
@@ -43,6 +49,27 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		actionButton: {
 			padding: theme.spacing(1),
+		},
+		taskTitle: {
+			marginBottom: theme.spacing(1),
+		},
+		secondary: {
+			display: "flex",
+			width: "100%",
+			justifyContent: "space-between",
+		},
+		dates: {
+			display: "flex",
+			justifyContent: "center",
+			flexDirection: "column",
+			flexGrow: 1,
+			flexShrink: 0,
+		},
+		actions: {
+			display: "flex",
+			flexWrap: "wrap",
+			justifyContent: "flex-end",
+			alignItems: "center",
 		},
 	})
 );
@@ -64,57 +91,61 @@ const Task = (props: {
 		<Card className={classes.root}>
 			<CardContent className={classes.content}>
 				<div className={classes.main}>
-					<Typography variant="h5" component="h2">
+					<Typography
+						className={classes.taskTitle}
+						variant="h5"
+						component="h2"
+					>
 						{props.task.description}
 					</Typography>
-					<Typography
-						className={classes.created}
-						color="textSecondary"
-					>
-						Created: {formatDate(props.task.createdAt)}
-					</Typography>
-					{props.task.dueDate ? (
-						<Typography
-							className={classes.created}
-							color="textSecondary"
-						>
-							Due: {formatDate(props.task.dueDate)}
-						</Typography>
-					) : null}
-				</div>
-				<CardActions>
-					<Link
-						to={{
-							pathname: `/tasks/edit/${props.task._id}`,
-							state: props.task,
-						}}
-					>
-						<IconButton className={classes.actionButton}>
-							<Edit />
-						</IconButton>
-					</Link>
-					<IconButton
-						className={classes.actionButton}
-						onClick={() => props.handleDelete(props.task._id)}
-					>
-						<Delete />
-					</IconButton>
-					<IconButton
-						className={classes.actionButton}
-						onClick={() =>
+
+					<Checkbox
+						checked={props.task.completed}
+						color="primary"
+						onChange={() =>
 							props.handleComplete(
 								props.task._id,
 								props.task.completed
 							)
 						}
-					>
-						{props.task.completed ? (
-							<Done className={classes.complete} />
-						) : (
-							<Clear className={classes.notComplete} />
-						)}
-					</IconButton>
-				</CardActions>
+					/>
+				</div>
+				<div className={classes.secondary}>
+					<div className={classes.dates}>
+						<Typography
+							className={classes.date}
+							color="textSecondary"
+						>
+							Created: {formatDate(props.task.createdAt)}
+						</Typography>
+						{props.task.dueDate ? (
+							<Typography
+								className={classes.date}
+								color="textSecondary"
+							>
+								Due: {formatDate(props.task.dueDate)}
+							</Typography>
+						) : null}
+					</div>
+					<div className={classes.actions}>
+						<Link
+							to={{
+								pathname: `/tasks/edit/${props.task._id}`,
+								state: props.task,
+							}}
+						>
+							<IconButton className={classes.actionButton}>
+								<Edit />
+							</IconButton>
+						</Link>
+						<IconButton
+							className={classes.actionButton}
+							onClick={() => props.handleDelete(props.task._id)}
+						>
+							<Delete />
+						</IconButton>
+					</div>
+				</div>
 			</CardContent>
 		</Card>
 	);
