@@ -32,6 +32,12 @@ const UserTasks = () => {
 	const outstandingTasks = tasks.filter((task) => {
 		return !task.completed;
 	}).length;
+	const overdueTasks = tasks.filter((task) => {
+		const overDue = task.dueDate
+			? Date.parse(task.dueDate!) < Date.now()
+			: false;
+		return !task.completed && overDue;
+	}).length;
 
 	const getTasks = async () => {
 		const tasks = await getUserTasks(
@@ -69,7 +75,11 @@ const UserTasks = () => {
 				setSortOrder={setSortOrder}
 			/>
 			<div className={classes.taskContainer}>
-				<h3>You have {outstandingTasks} tasks to complete</h3>
+				<h3>
+					You have {outstandingTasks} tasks to complete.{" "}
+					{overdueTasks} tasks are overdue
+				</h3>
+
 				{tasks.map((task) => (
 					<Task
 						task={task}
