@@ -27,17 +27,21 @@ const UserTasks = () => {
 	const [sortBy, setSortBy] = useState<string>("createdAt");
 	const [sortOrder, setSortOrder] = useState<string>("desc");
 	const [filterCompleted, setFilterCompleted] = useState<boolean>(true);
-	const { user } = useUser();
+	const { user, setUser } = useUser();
 	const classes = useStyles();
-	const outstandingTasks = tasks.filter((task) => {
-		return !task.completed;
-	}).length;
-	const overdueTasks = tasks.filter((task) => {
-		const overDue = task.dueDate
-			? Date.parse(task.dueDate!) < Date.now()
-			: false;
-		return !task.completed && overDue;
-	}).length;
+	const outstandingTasks = tasks.length
+		? tasks.filter((task) => {
+				return !task.completed;
+		  }).length
+		: 0;
+	const overdueTasks = tasks.length
+		? tasks.filter((task) => {
+				const overDue = task.dueDate
+					? Date.parse(task.dueDate!) < Date.now()
+					: false;
+				return !task.completed && overDue;
+		  }).length
+		: 0;
 
 	const getTasks = async () => {
 		const tasks = await getUserTasks(
@@ -46,8 +50,15 @@ const UserTasks = () => {
 			sortOrder,
 			filterCompleted
 		);
-		setTasks(tasks);
-		setLoaded(true);
+		if (tasks.error) {
+			setUser({
+				token: "",
+			});
+			window.location.href = "/";
+		} else {
+			setTasks(tasks);
+			setLoaded(true);
+		}
 	};
 
 	useEffect(() => {
@@ -80,14 +91,16 @@ const UserTasks = () => {
 					{overdueTasks} tasks are overdue
 				</h3>
 
-				{tasks.map((task) => (
-					<Task
-						task={task}
-						key={task._id}
-						handleComplete={handleComplete}
-						handleDelete={handleDelete}
-					/>
-				))}
+				{tasks.length
+					? tasks.map((task) => (
+							<Task
+								task={task}
+								key={task._id}
+								handleComplete={handleComplete}
+								handleDelete={handleDelete}
+							/>
+					  ))
+					: null}
 				<Link to="/tasks/new">
 					<IconButton className={classes.actionButton}>
 						<AddCircle />

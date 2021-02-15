@@ -83,6 +83,7 @@ export const getUserTasks = async (
 		};
 		const response = await fetch(url, fetchOptions);
 		const jsonResponse = await response.json();
+
 		return await jsonResponse;
 	} catch (e) {
 		console.log(e);
