@@ -1,3 +1,5 @@
+import { TaskInterface } from "../Task/Task";
+
 require("dotenv").config();
 
 const apiUrl =
@@ -68,12 +70,13 @@ export const getUserTasks = async (
 	token: string,
 	sortBy: string,
 	sortOrder: string,
-	filterCompleted: boolean
-) => {
+	filterCompleted: boolean,
+	category?: string
+): Promise<Array<TaskInterface> | {error: string}> => {
 	try {
 		const url = `${apiUrl}/tasks?sortBy=${sortBy}:${sortOrder}${
 			filterCompleted ? "&completed=false" : ""
-		}`;
+		}&category=${category}`;
 		const fetchOptions = {
 			method: "GET",
 			headers: {

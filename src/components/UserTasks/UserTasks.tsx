@@ -27,6 +27,8 @@ const UserTasks = () => {
 	const [sortBy, setSortBy] = useState<string>("createdAt");
 	const [sortOrder, setSortOrder] = useState<string>("desc");
 	const [filterCompleted, setFilterCompleted] = useState<boolean>(true);
+	const [category, setCategory] = useState<string>("All");
+	const [categories, setCategories] = useState<string[]>([]);
 	const { user, setUser } = useUser();
 	const classes = useStyles();
 	const outstandingTasks = tasks.length
@@ -48,22 +50,45 @@ const UserTasks = () => {
 			user.token,
 			sortBy,
 			sortOrder,
-			filterCompleted
+			filterCompleted,
+			category
 		);
-		if (tasks.error) {
+		if ((tasks as { error: string }).error) {
 			setUser({
 				token: "",
 			});
 			window.location.href = "/";
 		} else {
-			setTasks(tasks);
+			setTasks(tasks as TaskInterface[]);
 			setLoaded(true);
 		}
 	};
 
+	const getCategories = async () => {
+		// get all tasks
+		const userTasks = await getUserTasks(
+			user.token,
+			sortBy,
+			sortOrder,
+			filterCompleted,
+			"All"
+		);
+
+		const userCategories = (userTasks as TaskInterface[]).map(
+			(task: TaskInterface) => task.category
+		);
+		setCategories([...new Set(userCategories)] as string[]);
+	};
+
+	// update tasks when filters change
 	useEffect(() => {
 		getTasks();
-	}, [filterCompleted, sortBy, sortOrder]);
+	}, [filterCompleted, sortBy, sortOrder, category]);
+
+	// update categories when filterCompleted change
+	useEffect(() => {
+		getCategories();
+	}, [filterCompleted]);
 
 	const handleComplete = async (id: string, completed: boolean) => {
 		await updateTask(user.token, id, { completed: !completed });
@@ -84,6 +109,9 @@ const UserTasks = () => {
 				setSortBy={setSortBy}
 				sortOrder={sortOrder}
 				setSortOrder={setSortOrder}
+				category={category}
+				setCategory={setCategory}
+				userCategories={categories}
 			/>
 			<div className={classes.taskContainer}>
 				<h3>

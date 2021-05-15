@@ -32,6 +32,9 @@ const UserTaskControls = (props: {
 	setSortBy: Dispatch<SetStateAction<string>>;
 	sortOrder: string;
 	setSortOrder: Dispatch<SetStateAction<string>>;
+	category: string;
+	setCategory: Dispatch<SetStateAction<string>>;
+	userCategories: string[];
 }) => {
 	const classes = useStyles();
 
@@ -52,6 +55,24 @@ const UserTaskControls = (props: {
 					name="completed"
 					inputProps={{ "aria-label": "completed checkbox" }}
 				/>
+			</div>
+			<div className={classes.control}>
+				<FormControl>
+					<InputLabel id="task-form-category">Category</InputLabel>
+					<Select
+						labelId="task-form-category"
+						id="category"
+						value={props.category}
+						onChange={(event) =>
+							props.setCategory(event.target.value as string)
+						}
+					>
+						<MenuItem value={"All"}>All</MenuItem>
+						{props.userCategories.map((category) => (
+							<MenuItem value={category}>{category}</MenuItem>
+						))}
+					</Select>
+				</FormControl>
 			</div>
 			<div className={classes.control}>
 				<FormControl className={classes.control}>
