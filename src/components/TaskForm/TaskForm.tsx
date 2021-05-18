@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -10,6 +10,7 @@ import {
 	MuiPickersUtilsProvider,
 	KeyboardDatePicker,
 } from "@material-ui/pickers";
+import useUser from "../auth/useUser";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -50,6 +51,10 @@ const TaskForm = (props: {
 	const handleDateChange = (date: Date | null) => {
 		setSelectedDate(date);
 	};
+
+	useEffect(() => {
+		const defaultCategories = ["General", "Work", "Exercise"];
+	});
 
 	return (
 		<div className={classes.formContainer}>

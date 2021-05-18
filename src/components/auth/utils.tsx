@@ -72,7 +72,7 @@ export const getUserTasks = async (
 	sortOrder: string,
 	filterCompleted: boolean,
 	category?: string
-): Promise<Array<TaskInterface> | {error: string}> => {
+): Promise<Array<TaskInterface> | { error: string }> => {
 	try {
 		const url = `${apiUrl}/tasks?sortBy=${sortBy}:${sortOrder}${
 			filterCompleted ? "&completed=false" : ""
@@ -92,6 +92,25 @@ export const getUserTasks = async (
 		console.log(e);
 		return [];
 	}
+};
+
+export const getUserCategories = async (
+	token: string,
+	filterCompleted: boolean
+): Promise<string[]> => {
+	const url = `${apiUrl}/categories?${
+		filterCompleted ? "&completed=false" : ""
+	}`;
+	const fetchOptions = {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	};
+	const response = await fetch(url, fetchOptions);
+	const jsonResponse = await response.json();
+	return jsonResponse;
 };
 
 export const updateTask = async (token: string, id: string, options: {}) => {

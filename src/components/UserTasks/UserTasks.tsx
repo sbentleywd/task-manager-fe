@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getUserTasks, deleteTask, updateTask } from "../auth/utils";
+import {
+	getUserTasks,
+	deleteTask,
+	updateTask,
+	getUserCategories,
+} from "../auth/utils";
 import useUser from "../auth/useUser";
 import Task, { TaskInterface } from "../Task/Task";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
@@ -65,19 +70,11 @@ const UserTasks = () => {
 	};
 
 	const getCategories = async () => {
-		// get all tasks
-		const userTasks = await getUserTasks(
+		const userCategories = await getUserCategories(
 			user.token,
-			sortBy,
-			sortOrder,
-			filterCompleted,
-			"All"
+			filterCompleted
 		);
-
-		const userCategories = (userTasks as TaskInterface[]).map(
-			(task: TaskInterface) => task.category
-		);
-		setCategories([...new Set(userCategories)] as string[]);
+		setCategories(userCategories);
 	};
 
 	// update tasks when filters change
