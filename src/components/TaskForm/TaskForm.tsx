@@ -4,13 +4,14 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Switch from "@material-ui/core/Switch";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import {
 	MuiPickersUtilsProvider,
 	KeyboardDatePicker,
 } from "@material-ui/pickers";
-import useUser from "../auth/useUser";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -32,11 +33,17 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const TaskForm = (props: {
-	task: { description: string; completed: boolean; dueDate?: string };
+	task: {
+		description: string;
+		completed: boolean;
+		dueDate?: string;
+		category?: string;
+	};
 	handleSave: (
 		description: string,
 		completed: boolean,
-		dueDate: Date | null
+		dueDate: Date | null,
+		category: string
 	) => void;
 }) => {
 	const classes = useStyles();
@@ -44,6 +51,9 @@ const TaskForm = (props: {
 		props.task.description
 	);
 	const [completed, setCompleted] = useState<boolean>(props.task.completed);
+	const [category, setCategory] = useState<string>(
+		props.task.category ? props.task.category : "General"
+	);
 	const [selectedDate, setSelectedDate] = React.useState<Date | null>(
 		props.task.dueDate ? new Date(props.task.dueDate!) : new Date()
 	);
@@ -66,7 +76,19 @@ const TaskForm = (props: {
 				onChange={(e) => setDescription(e.target.value)}
 				value={description}
 			/>
-
+			<Select
+				labelId="task-form-category"
+				id="category"
+				value={category}
+				onChange={(event) => setCategory(event.target.value as string)}
+			>
+				<MenuItem value={"General"} key={0}>
+					General
+				</MenuItem>
+				<MenuItem value={"Fitness"} key={1}>
+					Fitness
+				</MenuItem>
+			</Select>
 			<MuiPickersUtilsProvider utils={DateFnsUtils}>
 				<KeyboardDatePicker
 					margin="normal"
@@ -90,7 +112,12 @@ const TaskForm = (props: {
 
 			<Button
 				onClick={() =>
-					props.handleSave(description, completed, selectedDate)
+					props.handleSave(
+						description,
+						completed,
+						selectedDate,
+						category
+					)
 				}
 				variant="contained"
 				color="primary"

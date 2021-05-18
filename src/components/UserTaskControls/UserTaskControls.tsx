@@ -67,9 +67,13 @@ const UserTaskControls = (props: {
 							props.setCategory(event.target.value as string)
 						}
 					>
-						<MenuItem value={"All"}>All</MenuItem>
-						{props.userCategories.map((category) => (
-							<MenuItem value={category}>{category}</MenuItem>
+						<MenuItem value={"All"} key={0}>
+							All
+						</MenuItem>
+						{props.userCategories.map((category, index) => (
+							<MenuItem value={category} key={index + 1}>
+								{category}
+							</MenuItem>
 						))}
 					</Select>
 				</FormControl>

@@ -167,4 +167,5 @@ type newTask = {
 	description: string;
 	completed: boolean;
 	dueDate?: Date | null;
+	category: string;
 };
