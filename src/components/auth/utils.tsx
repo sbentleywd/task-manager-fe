@@ -1,3 +1,5 @@
+import { TaskInterface } from "../Task/Task";
+
 require("dotenv").config();
 
 const apiUrl =
@@ -68,12 +70,13 @@ export const getUserTasks = async (
 	token: string,
 	sortBy: string,
 	sortOrder: string,
-	filterCompleted: boolean
-) => {
+	filterCompleted: boolean,
+	category?: string
+): Promise<Array<TaskInterface> | { error: string }> => {
 	try {
 		const url = `${apiUrl}/tasks?sortBy=${sortBy}:${sortOrder}${
 			filterCompleted ? "&completed=false" : ""
-		}`;
+		}&category=${category}`;
 		const fetchOptions = {
 			method: "GET",
 			headers: {
@@ -85,6 +88,31 @@ export const getUserTasks = async (
 		const jsonResponse = await response.json();
 
 		return await jsonResponse;
+	} catch (e) {
+		console.log(e);
+		return [];
+	}
+};
+
+export const getUserCategories = async (
+	token: string,
+	filterCompleted: boolean
+): Promise<string[]> => {
+	const url = `${apiUrl}/categories?${
+		filterCompleted ? "&completed=false" : ""
+	}`;
+
+	try {
+		const fetchOptions = {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		const response = await fetch(url, fetchOptions);
+		const jsonResponse = await response.json();
+		return jsonResponse;
 	} catch (e) {
 		console.log(e);
 		return [];
@@ -145,4 +173,5 @@ type newTask = {
 	description: string;
 	completed: boolean;
 	dueDate?: Date | null;
+	category: string;
 };

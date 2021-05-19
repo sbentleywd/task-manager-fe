@@ -162,4 +162,5 @@ export interface TaskInterface {
 	updatedAt: string;
 	__v: number;
 	dueDate?: string;
+	category: string;
 }
