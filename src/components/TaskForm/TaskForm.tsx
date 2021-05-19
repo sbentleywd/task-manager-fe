@@ -12,6 +12,8 @@ import {
 	MuiPickersUtilsProvider,
 	KeyboardDatePicker,
 } from "@material-ui/pickers";
+import { getUserCategories } from "../auth/utils";
+import useUser from "../auth/useUser";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -57,14 +59,22 @@ const TaskForm = (props: {
 	const [selectedDate, setSelectedDate] = React.useState<Date | null>(
 		props.task.dueDate ? new Date(props.task.dueDate!) : new Date()
 	);
-
+	const [categories, setCategories] = useState<string[]>([]);
+	const [addCategory, setAddCategory] = useState<boolean>(false);
+	const { user, setUser } = useUser();
 	const handleDateChange = (date: Date | null) => {
 		setSelectedDate(date);
 	};
 
-	useEffect(() => {
+	const getCategories = async () => {
 		const defaultCategories = ["General", "Work", "Exercise"];
-	});
+		const userCategories = await getUserCategories(user.token, false);
+		setCategories([...new Set([...userCategories, ...defaultCategories])]);
+	};
+
+	useEffect(() => {
+		getCategories();
+	}, []);
 
 	return (
 		<div className={classes.formContainer}>
@@ -82,12 +92,13 @@ const TaskForm = (props: {
 				value={category}
 				onChange={(event) => setCategory(event.target.value as string)}
 			>
-				<MenuItem value={"General"} key={0}>
-					General
-				</MenuItem>
-				<MenuItem value={"Fitness"} key={1}>
-					Fitness
-				</MenuItem>
+				{categories.map((category, i) => {
+					return (
+						<MenuItem value={category} key={i}>
+							{category}
+						</MenuItem>
+					);
+				})}
 			</Select>
 			<MuiPickersUtilsProvider utils={DateFnsUtils}>
 				<KeyboardDatePicker
