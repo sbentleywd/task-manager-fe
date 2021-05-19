@@ -101,16 +101,22 @@ export const getUserCategories = async (
 	const url = `${apiUrl}/categories?${
 		filterCompleted ? "&completed=false" : ""
 	}`;
-	const fetchOptions = {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${token}`,
-		},
-	};
-	const response = await fetch(url, fetchOptions);
-	const jsonResponse = await response.json();
-	return jsonResponse;
+
+	try {
+		const fetchOptions = {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		const response = await fetch(url, fetchOptions);
+		const jsonResponse = await response.json();
+		return jsonResponse;
+	} catch (e) {
+		console.log(e);
+		return [];
+	}
 };
 
 export const updateTask = async (token: string, id: string, options: {}) => {
